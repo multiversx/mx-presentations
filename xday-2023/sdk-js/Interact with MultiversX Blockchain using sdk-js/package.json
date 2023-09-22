@@ -1,0 +1,19 @@
+{
+    "name": "xday",
+    "version": "0.0.0",
+    "description": "xday",
+    "main": "src/main.js",
+    "scripts": {},
+    "author": "MultiversX",
+    "dependencies": {
+        "@multiversx/sdk-core": "12.9.0",
+        "@multiversx/sdk-network-providers": "1.5.0",
+        "@multiversx/sdk-wallet": "4.0.0",
+        "commander": "11.0.0",
+        "read": "^2.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "18.0.3",
+        "typescript": "4.7.4"
+    }
+}
