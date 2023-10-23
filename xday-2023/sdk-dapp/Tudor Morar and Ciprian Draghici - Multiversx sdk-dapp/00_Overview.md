@@ -1,0 +1,2 @@
+`@multiversx/sdk-dapp` is a library dedicated to building dApps on the MultiversX blockchain and to facilitate the interaction with the blockchain. 
+It exposes many components, hooks, and functions to help the developers build a dApp from scratch in a simpler way.
