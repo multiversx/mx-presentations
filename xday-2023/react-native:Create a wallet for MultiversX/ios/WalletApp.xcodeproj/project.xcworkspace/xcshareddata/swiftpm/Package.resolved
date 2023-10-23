@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/attaswift/BigInt",
+      "state" : {
+        "branch" : "master",
+        "revision" : "77c4a706572611eea5a3cb42ae46f47931b07724"
+      }
+    },
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift",
+      "state" : {
+        "branch" : "main",
+        "revision" : "db51c407d3be4a051484a141bf0bff36c43d3b1e"
+      }
+    },
+    {
+      "identity" : "keychainaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kishikawakatsumi/KeychainAccess",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ecb18d8ce4d88277cc4fb103973352d91e18c535"
+      }
+    },
+    {
+      "identity" : "wallet-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/trustwallet/wallet-core",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c86ab9d7701241e6bf1e756393ec37301bdf0a36"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -1,0 +1,86 @@
+{
+  "root":true,
+  "extends": [
+    "react-native",
+    "plugin:import/typescript",
+    "plugin:sonarjs/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins":[
+    "@typescript-eslint",
+    "react-native",
+    "sonarjs",
+    "import",
+    "prettier",
+    "jest"
+  ],
+  "settings": {
+    "parserOptions": {
+      "ecmaFeatures": { "jsx": true }
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx", "android.ts", "ios.ts", "android.tsx", "ios.tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["src"]
+      },
+      "typescript": {
+        "extensions": [".js", ".ts", ".jsx", ".tsx", "android.ts", "ios.ts", "android.tsx", "ios.tsx"],
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "rules": {
+    "no-multiple-empty-lines":"error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-native/no-unused-styles": "error",
+    "react-native/no-single-element-style-arrays": "warn",
+    "@typescript-eslint/no-unused-vars":"error",
+    "promise/always-return": 0,
+    "no-shadow": "off",
+    "no-undef": "error",
+    "no-catch-shadow": "error",
+    "no-confusing-arrow": "error",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/indent": "off",
+    "radix":"off",
+    "import/order": [
+      "warn",
+      {
+        "pathGroups": [
+          {
+            "pattern": "{assets,constants,hooks,utils,components,containers,screens}/**",
+            "group": "object"
+          },
+          {
+            "pattern": "**types/**",
+            "group": "type"
+          },
+          {
+            "pattern":"react**",
+            "group":"external",
+            "position":"before"
+          }
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": [
+          ["builtin", "external"],
+          ["internal"],
+          ["index"],
+          ["object"],
+          ["type"],
+          ["parent", "sibling"],
+          ["unknown"]
+        ]
+      }
+    ]
+  }
+}

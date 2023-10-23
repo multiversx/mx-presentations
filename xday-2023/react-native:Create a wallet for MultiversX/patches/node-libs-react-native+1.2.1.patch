@@ -1,0 +1,13 @@
+diff --git a/node_modules/node-libs-react-native/index.js b/node_modules/node-libs-react-native/index.js
+index d249030..c59de89 100644
+--- a/node_modules/node-libs-react-native/index.js
++++ b/node_modules/node-libs-react-native/index.js
+@@ -9,7 +9,7 @@ exports.dgram						= null;
+ exports.dns							= null;
+ exports.domain						= require.resolve('domain-browser');
+ exports.events						= require.resolve('events/');
+-exports.fs							= null;
++exports.fs							= require.resolve('react-native-fs/');
+ exports.http						= require.resolve('stream-http');
+ exports.https						= require.resolve('https-browserify');
+ exports.module						= null;
