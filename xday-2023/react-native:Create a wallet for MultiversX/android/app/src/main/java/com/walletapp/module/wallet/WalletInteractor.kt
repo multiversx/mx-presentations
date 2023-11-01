@@ -29,7 +29,7 @@ class WalletInteractor(private val encryptedSharedPreferences: SharedPreferences
         return createWallet(name)
     }
 
-    fun importWallet(name: String, mnemonic: String): Wallet {
+    fun importWallet(mnemonic: String, name: String): Wallet {
         return createWallet(name,mnemonic)
     }
 
