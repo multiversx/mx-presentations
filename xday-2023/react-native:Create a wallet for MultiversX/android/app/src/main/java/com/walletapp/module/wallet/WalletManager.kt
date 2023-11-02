@@ -35,6 +35,7 @@ class WalletManager(reactContext: ReactApplicationContext) : ReactContextBaseJav
     @ReactMethod
     fun generateNewWallet(name: String, promise: Promise) {
         val wallet = walletInteractor.generateNewWallet(name)
+        val walletMap = Arguments.createMap()
         walletMap.putString("identifier", wallet.identifier)
         walletMap.putString("address", wallet.address)
         promise.resolve(walletMap)
@@ -44,6 +45,7 @@ class WalletManager(reactContext: ReactApplicationContext) : ReactContextBaseJav
     fun importWallet(mnemonic: String, name: String, promise: Promise) {
         try {
             val wallet = walletInteractor.importWallet(mnemonic, name)
+            val walletMap = Arguments.createMap()
             walletMap.putString("identifier", wallet.identifier)
             walletMap.putString("address", wallet.address)
             promise.resolve(walletMap)
