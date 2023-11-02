@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.Arguments
 import com.google.gson.Gson
 import com.maiar2.data.model.wallet.SignTransactionInput
 import com.walletapp.util.toJsonString
@@ -34,14 +35,20 @@ class WalletManager(reactContext: ReactApplicationContext) : ReactContextBaseJav
     @ReactMethod
     fun generateNewWallet(name: String, promise: Promise) {
         val wallet = walletInteractor.generateNewWallet(name)
-        promise.resolve(wallet)
+        val walletMap = Arguments.createMap()
+        walletMap.putString("identifier", wallet.identifier)
+        walletMap.putString("address", wallet.address)
+        promise.resolve(walletMap)
     }
 
     @ReactMethod
     fun importWallet(mnemonic: String, name: String, promise: Promise) {
         try {
             val wallet = walletInteractor.importWallet(mnemonic, name)
-            promise.resolve(wallet)
+            val walletMap = Arguments.createMap()
+            walletMap.putString("identifier", wallet.identifier)
+            walletMap.putString("address", wallet.address)
+            promise.resolve(walletMap)
         } catch (e: Exception) {
             promise.reject(e)
         }
