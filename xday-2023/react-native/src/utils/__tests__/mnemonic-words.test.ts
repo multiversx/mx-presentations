@@ -1,4 +1,4 @@
-import { extractMnemonic } from '../';
+import { extractMnemonic } from '..';
 
 describe('extractWords', () => {
   it('should extract words and return them separated by spaces', () => {
