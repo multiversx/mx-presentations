@@ -1,46 +1,34 @@
 const os = require("os");
 const fs = require("fs");
 const read = require("read");
-const { UserSigner } = require("@multiversx/sdk-wallet");
-const { Address, Code, TransactionWatcher, ResultsParser, AbiRegistry } = require("@multiversx/sdk-core");
-const { ApiNetworkProvider } = require("@multiversx/sdk-network-providers");
-const { API_URL, EXPLORER_URL } = require("./config");
+const { Account, DevnetEntrypoint, SmartContractTransactionsOutcomeParser, TransactionWatcher, Code, UserSigner } = require("@multiversx/sdk-core");
+const { Abi } = require("@multiversx/sdk-core/out/abi");
 
 class AppBase {
     constructor() {
-        this.networkProvider = new ApiNetworkProvider(API_URL, { timeout: 10000 });
+        this.entrypoint = new DevnetEntrypoint();
+        this.provider = this.entrypoint.createNetworkProvider();
+        this.factory = this.entrypoint.createSmartContractTransactionsFactory();
         this.transactionWatcher = new TransactionWatcher(this.networkProvider, { patienceMilliseconds: 8000 });
+        this.parser = new SmartContractTransactionsOutcomeParser();
     }
-
     // We load a signer object from a JSON wallet file.
-    async loadSigner(walletPath) {
+    async loadAccount(walletPath) {
         const resolvedPath = walletPath.replace("~", os.homedir);
         const walletJson = await fs.promises.readFile(resolvedPath, { encoding: "utf8" });
         const walletObject = JSON.parse(walletJson);
         const password = await this.askWalletPassword();
-        return UserSigner.fromWallet(walletObject, password);
+        const userSigner = UserSigner.fromWallet(walletObject, password);
+        return new Account(userSigner.secretKey);
     }
 
     async askWalletPassword() {
         return await read({ prompt: "Wallet password: ", silent: true });
     }
 
-    // All transactions must hold the nonce of the sender account.
-    async recallAccountNonce(address) {
-        // Performs a GET request against the API.
-        const accountOnNetwork = await this.networkProvider.getAccount(address);
-        return accountOnNetwork.nonce;
-    }
-
-    async signTransaction(transaction, signer) {
-        const serializedTransaction = transaction.serializeForSigning();
-        const transactionSignature = await signer.sign(serializedTransaction);
-        transaction.applySignature(transactionSignature);
-    }
-
     async broadcastTransaction(transaction) {
         // Performs a POST request against the API.
-        const transactionHash = await this.networkProvider.sendTransaction(transaction);
+        const transactionHash = await this.entrypoint.sendTransaction(transaction);
         console.log(`Transaction hash: ${transactionHash}`);
         console.log(`See it on Explorer: ${EXPLORER_URL}/transactions/${transactionHash}`);
     }
@@ -54,7 +42,6 @@ class AppBase {
 class ContractAppBase extends AppBase {
     constructor() {
         super();
-        this.resultsParser = new ResultsParser();
     }
 
     async loadContractCode(bytecodePath) {
@@ -65,19 +52,10 @@ class ContractAppBase extends AppBase {
     async loadContractAbi(abiPath) {
         const abiJson = await fs.promises.readFile(abiPath, { encoding: "utf8" });
         const abiObj = JSON.parse(abiJson);
-        const abiRegistry = AbiRegistry.create(abiObj);
+        const abiRegistry = Abi.create(abiObj);
         return abiRegistry;
     }
 
-    parseDeployOutcome(transactionOnNetwork) {
-        const outcome = this.resultsParser.parseUntypedOutcome(transactionOnNetwork);
-        this.assertSuccessfulOutcome(outcome);
-
-        const scDeployEvent = transactionOnNetwork.logs.findSingleOrNoneEvent("SCDeploy");
-        const firstTopic = scDeployEvent.topics[0];
-        const contractAddress = Address.fromHex(firstTopic.hex());
-        return { contractAddress };
-    }
 
     assertSuccessfulOutcome({ returnCode, returnMessage }) {
         if (!returnCode.isSuccess()) {
@@ -91,3 +69,4 @@ module.exports = {
     AppBase,
     ContractAppBase
 };
+
