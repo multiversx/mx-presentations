@@ -47,7 +47,6 @@ class App extends ContractAppBase {
 
         const txHash = await this.entrypoint.sendTransaction(deployTransaction);
         const response = await smartContractController.awaitCompletedDeploy(txHash);
-        console.log({ response });
         const contractAddress = response.contracts[0].address;
         console.log(`Contract deployed at address ${contractAddress}`);
     }
@@ -55,7 +54,7 @@ class App extends ContractAppBase {
     async addValue(cmdObj) {
         const sender = await this.loadAccount(cmdObj.wallet);
         const senderNonce = await this.entrypoint.recallAccountNonce(sender.address);
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const value = cmdObj.value;
 
         const smartContractController = this.entrypoint.createSmartContractController();
@@ -72,7 +71,7 @@ class App extends ContractAppBase {
     }
 
     async getSum(cmdObj) {
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const smartContractController = this.entrypoint.createSmartContractController();
 
         const queryResult = await smartContractController.query({ contract: contractAddress, function: "getSum", arguments: [] });

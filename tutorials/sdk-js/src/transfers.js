@@ -54,6 +54,7 @@ class App extends AppBase {
         const senderNonce = await this.entrypoint.recallAccountNonce(sender.address);
         const receiverAddress = Address.newFromBech32(cmdObj.receiver);
         const amount = cmdObj.amount;
+
         const transferController = this.entrypoint.createTransfersController();
         const transaction = await transferController.createTransactionForNativeTokenTransfer(sender, senderNonce,
             {
@@ -100,6 +101,7 @@ class App extends AppBase {
 
         const token = new Token({ identifier: tokenIdentifier, nonce: tokenNonce });
         const transfer = new TokenTransfer({ token: token, amount: amount });
+
         const transferController = this.entrypoint.createTransfersController();
         const transaction = await transferController.createTransactionForEsdtTokenTransfer(sender, senderNonce,
             {
@@ -142,7 +144,7 @@ class App extends AppBase {
     }
 
     async getBalances(cmdObj) {
-        const address = Address.fromBech32(cmdObj.address);
+        const address = Address.newFromBech32(cmdObj.address);
 
         const account = await this.provider.getAccount(address);
         const tokens = await this.provider.getFungibleTokensOfAccount(address);

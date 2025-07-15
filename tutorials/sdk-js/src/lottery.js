@@ -73,7 +73,6 @@ class App extends ContractAppBase {
             gasLimit: 60000000n,
             arguments: [],
         });
-        deployTransaction.nonce = senderNonce;
 
         const txHash = await this.entrypoint.sendTransaction(deployTransaction);
         const outcome = await smartContractController.awaitCompletedDeploy(txHash);
@@ -85,14 +84,13 @@ class App extends ContractAppBase {
         const sender = await this.loadAccount(cmdObj.wallet);
         const senderNonce = await this.entrypoint.recallAccountNonce(sender.address);
         sender.nonce = senderNonce;
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const abi = await this.loadContractAbi("contracts/lottery-esdt.abi.json");
         const lotteryName = cmdObj.name;
         const lotteryTokenIdentifier = cmdObj.token;
         const ticketPrice = cmdObj.price;
         const duration = parseInt(cmdObj.duration);
         const currentTimestamp = Math.floor((new Date()).getTime() / 1000);
-
 
         const smartContractController = this.entrypoint.createSmartContractController(abi);
         const transaction = await smartContractController.createTransactionForExecute(sender, senderNonce, {
@@ -108,7 +106,7 @@ class App extends ContractAppBase {
     }
 
     async getLotteryInfo(cmdObj) {
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const abi = await this.loadContractAbi("contracts/lottery-esdt.abi.json");
         const lotteryName = cmdObj.name;
 
@@ -128,7 +126,7 @@ class App extends ContractAppBase {
         const sender = await this.loadAccount(cmdObj.wallet);
         const senderNonce = await this.entrypoint.recallAccountNonce(sender.address);
         sender.nonce = senderNonce;
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const abi = await this.loadContractAbi("contracts/lottery-esdt.abi.json");
         const lotteryName = cmdObj.name;
         const tokenAmount = cmdObj.amount;
@@ -159,7 +157,7 @@ class App extends ContractAppBase {
         const senderAddress = sender.address;
         const senderNonce = await this.entrypoint.recallAccountNonce(senderAddress);
         sender.nonce = senderNonce;
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const abi = await this.loadContractAbi("contracts/lottery-esdt.abi.json");
         const lotteryName = cmdObj.name;
         const tokenAmount = cmdObj.amount;
@@ -194,7 +192,7 @@ class App extends ContractAppBase {
         const sender = await this.loadAccount(cmdObj.wallet);
         const senderNonce = await this.entrypoint.recallAccountNonce(sender.address);
         sender.nonce = senderNonce;
-        const contractAddress = Address.fromBech32(cmdObj.contract);
+        const contractAddress = Address.newFromBech32(cmdObj.contract);
         const abi = await this.loadContractAbi("contracts/lottery-esdt.abi.json");
         const lotteryName = cmdObj.name;
 

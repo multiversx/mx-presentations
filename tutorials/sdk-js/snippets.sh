@@ -3,8 +3,8 @@ BOB="erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx"
 WALLET_ALICE="~/multiversx-sdk/testwallets/latest/users/alice.json"
 WALLET_BOB="~/multiversx-sdk/testwallets/latest/users/bob.json"
 
-ADDER_ADDRESS="erd1qqqqqqqqqqqqqpgqcquk3zvncpypt7vaclw4unje6gd4n7xdd8ssa6xas9"
-LOTTERY_ADDRESS="erd1qqqqqqqqqqqqqpgq5x7an29astzlwcuemchz0va9fqs26a72d8ssuzywnf"
+ADDER_ADDRESS="erd1qqqqqqqqqqqqqpgqj7hrepeuqtagrlyxh66rf08qcz4mjerwd8sssust45"
+LOTTERY_ADDRESS="erd1qqqqqqqqqqqqqpgqm33787727k6hqz7t3gjea5hrutmf8nnad8sssrhuwa"
 LOTTERY_NAME="test"
 
 TOKEN_CHOCOLATE="ONE-83a7c0"
@@ -47,7 +47,7 @@ lotteryDeploy() {
 }
 
 lotteryStart() {
-    ./src/lottery.js start --contract ${LOTTERY_ADDRESS} --name ${LOTTERY_NAME} --token ${TOKEN_BEER} --price 1 --duration 80 --wallet ${WALLET_ALICE}
+    ./src/lottery.js start --contract ${LOTTERY_ADDRESS} --name ${LOTTERY_NAME} --token ${TOKEN_BEER} --price 1 --duration 100 --wallet ${WALLET_ALICE}
 }
 
 lotteryGetInfo() {

@@ -4,7 +4,7 @@ Hello everyone and welcome to this workshop!
 
 Today we are going to have a quick lesson on interacting with the MultiversX blockchain using JavaScript.
 
-We will learn to talk to the Network through a so-called network provider, and we'll create, sign and broadcast transactions (including Smart Contract calls), and query accounts state (including Smart Contract state).
+We will learn to talk to the Network through an entrypoint and we'll create, sign and broadcast transactions (including Smart Contract calls), and query accounts state (including Smart Contract state).
 
 We'll do so by creating three very simple CLI applications.
 
