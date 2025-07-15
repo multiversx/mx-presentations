@@ -4,8 +4,8 @@ const { Command } = require("commander");
 const { Address, BigUIntValue, decodeUnsignedNumber, U32Value } = require("@multiversx/sdk-core");
 const { ContractAppBase } = require("./shared");
 
-// Contract: https://github.com/multiversx/mx-sdk-rs/blob/master/contracts/examples/adder/src/adder.rs.
-// Built bytecode: https://github.com/multiversx/mx-reproducible-contract-build-example-sc/releases/download/v0.4.3/adder.wasm.
+// Contract: https://github.com/multiversx/mx-contracts-rs/blob/main/contracts/adder/src/adder.rs.
+// Built bytecode: https://github.com/multiversx/mx-contracts-rs/releases/download/v0.45.5/adder.wasm.
 // For the "adder" example, we will not be using an ABI.
 async function main() {
     const app = new App();

@@ -1,15 +1,14 @@
 const os = require("os");
 const fs = require("fs");
 const read = require("read");
-const { Account, DevnetEntrypoint, Code, UserSigner } = require("@multiversx/sdk-core");
-const { Abi } = require("@multiversx/sdk-core/out/abi");
+const { Abi, Account, DevnetEntrypoint, Code, UserSigner } = require("@multiversx/sdk-core");
 
 class AppBase {
     constructor() {
         this.entrypoint = new DevnetEntrypoint();
         this.provider = this.entrypoint.createNetworkProvider();
     }
-    // We load a signer object from a JSON wallet file.
+
     async loadAccount(walletPath) {
         const resolvedPath = walletPath.replace("~", os.homedir);
         const walletJson = await fs.promises.readFile(resolvedPath, { encoding: "utf8" });

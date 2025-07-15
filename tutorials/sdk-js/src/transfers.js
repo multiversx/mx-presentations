@@ -17,7 +17,7 @@ async function main() {
         .action(app.transferEGLD.bind(app));
 
     cli
-        .command("transfer-egld-factory")
+        .command("transfer-egld-using-factory")
         .requiredOption("--receiver <string>")
         .requiredOption("--amount <string>", "in atomic units of the native token (EGLD) ")
         .requiredOption("--wallet <string>")
@@ -33,7 +33,7 @@ async function main() {
 
 
     cli
-        .command("transfer-esdt-factory")
+        .command("transfer-esdt-using-factory")
         .requiredOption("--receiver <string>")
         .requiredOption("--token <string>")
         .requiredOption("--amount <string>", "in atomic units of the custom token (must be 1 for NFTs)")

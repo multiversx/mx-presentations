@@ -4,10 +4,12 @@ const { Command } = require("commander");
 const { Address, BytesValue, Token, TokenComputer, TokenTransfer } = require("@multiversx/sdk-core");
 const { ContractAppBase } = require("./shared");
 
-// Contract: https://github.com/multiversx/mx-sdk-rs/blob/master/contracts/examples/lottery-esdt/src/lottery.rs.
-// Documentation: https://github.com/multiversx/mx-sdk-rs/blob/master/contracts/examples/lottery-esdt/documentation.md.
-// Built bytecode: https://github.com/multiversx/mx-reproducible-contract-build-example-sc/releases/download/v0.4.4/lottery-esdt.wasm.
+// Contract: https://github.com/multiversx/mx-contracts-rs/blob/main/contracts/lottery-esdt/src/lottery.rs.
+// Documentation: https://github.com/multiversx/mx-contracts-rs/blob/main/contracts/lottery-esdt/documentation.md.
+// Built bytecode: https://github.com/multiversx/mx-contracts-rs/releases/download/v0.45.5/lottery-esdt.wasm.
+// ABI: https://github.com/multiversx/mx-contracts-rs/releases/download/v0.45.5/lottery-esdt.abi.json
 // For the "lottery-esdt" example, we will be using the ABI.
+
 async function main() {
     const app = new App();
     const cli = new Command();
@@ -43,7 +45,7 @@ async function main() {
         .action(app.buyTicket.bind(app));
 
     cli
-        .command("buy-ticket-factory")
+        .command("buy-ticket-using-factory")
         .requiredOption("--contract <string>")
         .requiredOption("--name <string>")
         .requiredOption("--token <string>")
@@ -187,7 +189,6 @@ class App extends ContractAppBase {
         console.log({ response });
     }
 
-
     async determineWinner(cmdObj) {
         const sender = await this.loadAccount(cmdObj.wallet);
         const senderNonce = await this.entrypoint.recallAccountNonce(sender.address);
@@ -195,8 +196,6 @@ class App extends ContractAppBase {
         const contractAddress = Address.newFromBech32(cmdObj.contract);
         const abi = await this.loadContractAbi("contracts/lottery-esdt.abi.json");
         const lotteryName = cmdObj.name;
-
-        // This gets improved in the upcoming version of "sdk-core" (see "mx-sdk-specs").
 
         const smartContractController = this.entrypoint.createSmartContractController(abi);
         const transaction = await smartContractController.createTransactionForExecute(sender, senderNonce, {
