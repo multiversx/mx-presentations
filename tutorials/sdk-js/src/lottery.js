@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { Command } = require("commander");
-const { Address, BytesValue, Token, TokenComputer, TokenTransfer } = require("@multiversx/sdk-core");
+const { Address, BytesValue, Token, TokenComputer, TokenTransfer, TransactionsFactoryConfig, SmartContractTransactionsOutcomeParser, SmartContractTransactionsFactory } = require("@multiversx/sdk-core");
 const { ContractAppBase } = require("./shared");
 
 // Contract: https://github.com/multiversx/mx-contracts-rs/blob/main/contracts/lottery-esdt/src/lottery.rs.
@@ -154,7 +154,6 @@ class App extends ContractAppBase {
     }
 
     async buyTicketUsingFactory(cmdObj) {
-        const parser = new SmartContractTransactionsOutcomeParser();
         const sender = await this.loadAccount(cmdObj.wallet);
         const senderAddress = sender.address;
         const senderNonce = await this.entrypoint.recallAccountNonce(senderAddress);
@@ -166,11 +165,12 @@ class App extends ContractAppBase {
         const tokenComputer = new TokenComputer();
         const tokenIdentifier = tokenComputer.extractIdentifierFromExtendedIdentifier(cmdObj.token);
         const tokenNonce = tokenComputer.extractNonceFromExtendedIdentifier(cmdObj.token);
+        const parser = new SmartContractTransactionsOutcomeParser({ abi: abi });
 
         const token = new Token({ identifier: tokenIdentifier, nonce: tokenNonce });
         const transfer = new TokenTransfer({ token: token, amount: tokenAmount });
-        const smartContractFactory = this.entrypoint.createSmartContractTransactionsFactory(abi);
-        const transaction = await smartContractFactory.createTransactionForExecute(senderAddress, {
+        const smartContractFactory = new SmartContractTransactionsFactory({ abi: abi, config: new TransactionsFactoryConfig({ chainID: "D" }) });
+        const transaction = smartContractFactory.createTransactionForExecute(senderAddress, {
             contract: contractAddress,
             gasLimit: 5000000,
             function: "buy_ticket",
@@ -182,9 +182,8 @@ class App extends ContractAppBase {
         transaction.signature = await sender.signTransaction(transaction);
 
         const txHash = await this.entrypoint.sendTransaction(transaction);
-
-        let transactionOnNetwork = await provider.getTransaction(txHash);
-        let response = parser.parseExecute({ transactionOnNetwork });
+        let transactionOnNetwork = await this.entrypoint.getTransaction(txHash);
+        let response = parser.parseExecute({ transactionOnNetwork, function: "buy_ticket" });
 
         console.log({ response });
     }

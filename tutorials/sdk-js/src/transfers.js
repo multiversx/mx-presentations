@@ -75,7 +75,7 @@ class App extends AppBase {
         const amount = cmdObj.amount;
 
         const transferFactory = this.entrypoint.createTransfersTransactionsFactory();
-        const transaction = await transferFactory.createTransactionForNativeTokenTransfer(senderAddress,
+        const transaction = transferFactory.createTransactionForNativeTokenTransfer(senderAddress,
             {
                 receiver: receiverAddress,
                 nativeAmount: amount,
@@ -109,7 +109,6 @@ class App extends AppBase {
                 tokenTransfers: [transfer],
             });
 
-
         const transactionHash = await this.entrypoint.sendTransaction(transaction);
         console.log(`Transaction hash: ${transactionHash}`);
         console.log(`See it on Explorer: ${EXPLORER_URL}/transactions/${transactionHash}`);
@@ -129,7 +128,7 @@ class App extends AppBase {
         const token = new Token({ identifier: tokenIdentifier, nonce: tokenNonce });
         const transfer = new TokenTransfer({ token: token, amount: amount });
         const transferFactory = this.entrypoint.createTransfersTransactionsFactory();
-        const transaction = await transferFactory.createTransactionForESDTTokenTransfer(senderAddress,
+        const transaction = transferFactory.createTransactionForESDTTokenTransfer(senderAddress,
             {
                 receiver: receiverAddress,
                 tokenTransfers: [transfer],

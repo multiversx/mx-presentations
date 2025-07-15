@@ -3,8 +3,8 @@ GRACE_ADDRESS="erd1r69gk66fmedhhcg24g2c5kn2f2a5k4kvpr6jfw67dn2lyydd8cfswy6ede"
 WALLET_ALICE="~/multiversx-sdk/testwallets/latest/users/alice.json"
 WALLET_GRACE="~/multiversx-sdk/testwallets/latest/users/grace.json"
 
-ADDER_ADDRESS="erd1qqqqqqqqqqqqqpgqj7hrepeuqtagrlyxh66rf08qcz4mjerwd8sssust45"
-LOTTERY_ADDRESS="erd1qqqqqqqqqqqqqpgqm33787727k6hqz7t3gjea5hrutmf8nnad8sssrhuwa"
+ADDER_ADDRESS="erd1qqqqqqqqqqqqqpgqxz75akhwz0snrv9fwnsfhulqfv2463aed8ss979yh3"
+LOTTERY_ADDRESS="erd1qqqqqqqqqqqqqpgqn6p928wfxka2qh3cwaxha0mq50vzg828d8ssc9wsxv"
 LOTTERY_NAME="test"
 
 TOKEN_CHOCOLATE="CHOCOLATE-e98f2b"
@@ -19,11 +19,11 @@ transferEGLDUsingFactory() {
 }
 
 transferESDT() {
-    ./src/transfers.js transfer-esdt --receiver ${GRACE_ADDRESS} --wallet ${WALLET_ALICE} --token ${TOKEN_CHOCOLATE} --amount 100000000000000000
+    ./src/transfers.js transfer-esdt --receiver ${GRACE_ADDRESS} --wallet ${WALLET_ALICE} --token ${TOKEN_CHOCOLATE} --amount 10
 }
 
 transferESDTUsingFactory() {
-    ./src/transfers.js transfer-esdt-using-factory --receiver ${GRACE_ADDRESS} --wallet ${WALLET_ALICE} --token ${TOKEN_CHOCOLATE} --amount 100000000000000000
+    ./src/transfers.js transfer-esdt-using-factory --receiver ${GRACE_ADDRESS} --wallet ${WALLET_ALICE} --token ${TOKEN_CHOCOLATE} --amount 10
 }
 
 getBalances() {
