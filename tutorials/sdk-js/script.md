@@ -8,7 +8,7 @@ We will learn to talk to the Network through an entrypoint and we'll create, sig
 
 We'll do so by creating three very simple CLI applications.
 
-For this workshop we will use only the sdk-core. Since V13 the sdk-wallet and sdk-network-providers where included into sdk-core.
+For this workshop we will use only the sdk-core. Since V13 the sdk-wallet and sdk-network-providers were included into sdk-core.
 
 - [@multiversx/sdk-core](https://www.npmjs.com/package/@multiversx/sdk-core)
 
@@ -64,14 +64,14 @@ Before seeing the applications, let's jump a bit to file called `shared.js`, whe
 Let's have a quick look over the `AppBase` class.
 
 In the constructor, we create and retain:
- - a `DevnetEntrypoint` (we don't need to pass any config as it uses th devnet API by default)
+ - a `DevnetEntrypoint` (we don't need to pass any config as it uses the Devnet API by default)
  - and a provider (the MultiversX API) created via devnetEntrypoint.
 
 Then, we have the function `loadAccount`, able to load a JSON keyfile, ask the user for the password, and return a `Account` object. With this we can sign transactions, verify signatures, get the nonce and some other stuff that I encourage you to go and check out.
 
 Moving on, we've defined an additional class called `ContractAppBase` to hold some common functionality for this tutorial's second and third applications (that interact with Smart Contracts). Let's have a quick look over it, as well.
 
-It buils upon `AppBase`, and adds the following:
+It builds upon `AppBase`, and adds the following:
 
 Here, we've defined utility functions to load the contract bytecode, and the contract ABI. They will come in handy a bit later.
 
@@ -81,7 +81,7 @@ Let's move to the first app!
 
 ## First app
 
-We'll be transferring EGLD and ESDT tokens, and we'll be querying the balances of an account. We will build the transactions using the TransfersController that we create it via the endpoint or the TransferTransactionsFactory. Whenever you need a quich script to test something you could use the controller and when you are building a DAPP you could use the factory. 
+We'll be transferring EGLD and ESDT tokens, and we'll be querying the balances of an account. We will build the transactions using the TransfersController that we create via the entrypoint or the TransferTransactionsFactory. Whenever you need a quick script to test something you could use the controller and when you are building a DAPP you could use the factory. 
 
 Here's the skeleton of the application. We are going to implement the following commands:
 
@@ -93,14 +93,13 @@ As input arguments ...
 
 The implementation looks like this: ...
 
-First, we gather the prerequisites to create and sign the transaction, then with the controller help we create and sign the transaction. In the end, we broadcast it to the Network.
+First, we gather the prerequisites, then with the controller help we create and sign the transaction. In the end, we broadcast it to the Network.
 
-We added also the transfer using the factory. We followed the same scenario, we prepared the parameters and the we build the transaction with the factory help. Then we set the transaction nonce that we took with the entrypoint help and sign the transaction with the senderAccount. In the end, same as with the controller we broadcast it to the Network.
-💻
+We added also the transfer using the factory. We followed the same scenario, we prepared the parameters and then we built the transaction with the factory help. Then we set the transaction nonce that we fetched using the entrypoint and sign the transaction with the senderAccount. In the end, we broadcast it to the Network.
 
 In `snippets.sh`, there are a few shortcuts to smoke test our applications. Let's invoke `transferEGLD`.
 
-This will transfer 0.1 EGLD from Frank to Grace.
+This will transfer 0.1 EGLD from Alice to Grace.
 
 ### Transfer ESDT
 
@@ -110,11 +109,9 @@ The implementation looks like this: ...
 
 It's somehow similar to `transferEGLD`. Though, it relies on `createTransactionForEsdtTokenTransfer` which chooses the right type of transaction to create based on the provided token identifier. 
 
-Once we've created the right transaction, we sign and broadcast it. We build this example with both the controler and the factory to get used to both methods
+Once we've created the right transaction, we sign and broadcast it. We build this example with both the controller and the factory to get used to both methods
 
-Let's give it a try, let's invoke `transferESDT` from `snippets.sh`. This will transfer 100 One tokens from Alice to Bob.
-
-💻
+Let's give it a try, let's invoke `transferESDT` from `snippets.sh`. This will transfer 0.1 CHOCOLATE tokens from Alice to Grace.
 
 ### Query balances
 
@@ -172,7 +169,7 @@ Let's invoke some snippets!
 
 ## Third app
 
-We'll de deploying the `Lottery` Smart Contract, and we'll interact with it.
+We'll be deploying the `Lottery` Smart Contract, and we'll interact with it.
 
 The contract works as follows: anyone can start a lottery, then participants can buy tickets and hope to win. The winner is chosen by calling the `determineWinner` function.
 
@@ -188,7 +185,7 @@ This one requires the following input arguments: the name of the lottery, the to
 
 Here, we load the ABI of the contract, which we'll pass to the constructor of the `SmartContract` facility.
 
-We will relly on the controller here also or if you want you can do this easly with the factory.
+We will rely on the controller here also or if you want you can do this easily with the factory.
 
 Once we have created the transaction, we sign and broadcast it.
 
